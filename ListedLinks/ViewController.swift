@@ -79,6 +79,24 @@ class ViewController: UIViewController {
         return btn
     }()
     
+    private lazy var clLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 16, bottom: 10, right: 16)
+        layout.itemSize = CGSize(width: 60, height: 60)
+        layout.scrollDirection = .horizontal
+        return layout
+    }()
+    
+    private lazy var collectionView: UICollectionView = {
+        let frame = CGRect(x: 0, y: 496, width: self.view.frame.width, height: 120)
+        let myCollectionView:UICollectionView = UICollectionView(frame: frame, collectionViewLayout: clLayout)
+        myCollectionView.showsHorizontalScrollIndicator = false
+        myCollectionView.dataSource = self
+        myCollectionView.delegate = self
+        myCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
+        return myCollectionView
+    }()
+    
     private lazy var viewAllLinksBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle(Constants.viewAllLinks, for: .normal)
@@ -107,11 +125,16 @@ class ViewController: UIViewController {
         view.layer.cornerRadius = 16
         return view
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.view.addSubview(collectionView)
+    }
+    
     
     func setUpUI() {
         containerView.addSubview(settingsImage)
@@ -122,6 +145,7 @@ class ViewController: UIViewController {
         contentView.addSubview(nameLabel)
         contentView.addSubview(graphImage)
         contentView.addSubview(viewAnalyticsBtn)
+        contentView.addSubview(collectionView)
         contentView.addSubview(viewAllLinksBtn)
         containerView.addSubview(contentView)
         view.addSubview(containerView)
@@ -156,11 +180,16 @@ class ViewController: UIViewController {
             graphImage.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
             graphImage.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 24),
             
+            /*collectionView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            collectionView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -324),
+            collectionView.topAnchor.constraint(equalTo: graphImage.bottomAnchor, constant: 20),*/
             
             viewAnalyticsBtn.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             viewAnalyticsBtn.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 16),
+            //viewAnalyticsBtn.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 496),
             viewAnalyticsBtn.topAnchor.constraint(equalTo: graphImage.bottomAnchor, constant: 20),
             viewAnalyticsBtn.heightAnchor.constraint(equalToConstant: 48),
+            
             
             viewAllLinksBtn.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             viewAllLinksBtn.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 16),
@@ -168,7 +197,35 @@ class ViewController: UIViewController {
             viewAllLinksBtn.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
+}
 
 
+extension ViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            return CGSize.init(width: view.frame.width, height: 250)
+        }
+}
+
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath)
+        myCell.backgroundColor = .red
+        return myCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Item tapped---")
+    }
+    
+    
 }
 

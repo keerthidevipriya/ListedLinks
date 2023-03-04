@@ -11,14 +11,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    let vc1 = ViewController()
+    let vc2 = ViewController()
+    let vc3 = ViewController()
+    let vc4 = ViewController()
+    let vc5 = ViewController()
+    
+    private lazy var tabbarViewController: UITabBarController = {
+        let tabbarViewController = UITabBarController()
+        tabbarViewController.setViewControllers([vc1,
+                                                 vc2,
+                                                 vc3,
+                                                 vc4,
+                                                 vc5], animated: true)
+        
+        return tabbarViewController
+    }()
 
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let winScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: winScene)
         window?.rootViewController = ViewController()
+        window?.rootViewController = tabbarViewController
         window?.makeKeyAndVisible()
     }
 
