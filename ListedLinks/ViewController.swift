@@ -15,6 +15,8 @@ class ViewController: UIViewController {
         static let name = "Ajay Manva"
         static let viewAnalytics = "➰ View Analytics"
         static let viewAllLinks = "🔗 View all Links"
+        static let talkWithUs = "Talk with us"
+        static let freqAskedQues = "Frequently Asked Questions"
         static let settingsIcon = "settingsIcon"
         static let graphImage = "graphImage"
         
@@ -22,6 +24,8 @@ class ViewController: UIViewController {
         static let lightHexColor = #colorLiteral(red: 0.055, green: 0.435, blue: 1, alpha: 1)
         static let lightGreyColor = #colorLiteral(red: 0.6, green: 0.612, blue: 0.627, alpha: 1)
         static let borderColor = #colorLiteral(red: 0.847, green: 0.847, blue: 0.847, alpha: 1)
+        static let lightGreen = #colorLiteral(red: 0.29, green: 0.82, blue: 0.373, alpha: 0.12)
+        static let lightBlue = #colorLiteral(red: 0.908, green: 0.944, blue: 1, alpha: 1)
     }
     
     private lazy var dashboardLabel: UILabel = {
@@ -94,15 +98,54 @@ class ViewController: UIViewController {
         myCollectionView.dataSource = self
         myCollectionView.delegate = self
         myCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
+        //myCollectionView.translatesAutoresizingMaskIntoConstraints = false
         return myCollectionView
     }()
     
+    
+    var linksSegment: UISegmentedControl = {
+        var mySegmentedControl = UISegmentedControl (items: ["Top Links","Recent Links"])
+        mySegmentedControl.frame = CGRect(x: 16, y: 528, width: 300, height: 30)
+        mySegmentedControl.selectedSegmentIndex = 0
+        mySegmentedControl.tintColor = .systemRed
+        mySegmentedControl.backgroundColor = .white
+        mySegmentedControl.addTarget(nil, action: #selector(segmentedValueChanged), for: .valueChanged)
+        //mySegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        return mySegmentedControl
+    }()
+           
     private lazy var viewAllLinksBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle(Constants.viewAllLinks, for: .normal)
         btn.layer.cornerRadius = 8
         btn.layer.borderWidth = 1
         btn.layer.borderColor = Constants.borderColor.cgColor
+        btn.setTitleColor(.black, for: .normal)
+        btn.titleLabel?.font = UIFont(name: "Figtree-SemiBold", size: 16)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
+    private lazy var chatWithUsBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle(Constants.talkWithUs, for: .normal)
+        btn.layer.cornerRadius = 8
+        btn.layer.borderWidth = 1
+        btn.backgroundColor = Constants.lightGreen
+        btn.layer.borderColor = Constants.lightGreen.cgColor
+        btn.setTitleColor(.black, for: .normal)
+        btn.titleLabel?.font = UIFont(name: "Figtree-SemiBold", size: 16)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
+    private lazy var frequentlAskedQuesBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle(Constants.freqAskedQues, for: .normal)
+        btn.layer.cornerRadius = 8
+        btn.layer.borderWidth = 1
+        btn.backgroundColor = Constants.lightBlue
+        btn.layer.borderColor = Constants.lightBlue.cgColor
         btn.setTitleColor(.black, for: .normal)
         btn.titleLabel?.font = UIFont(name: "Figtree-SemiBold", size: 16)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -129,6 +172,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
+        setUpAutoLayout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -146,10 +190,15 @@ class ViewController: UIViewController {
         contentView.addSubview(graphImage)
         contentView.addSubview(viewAnalyticsBtn)
         contentView.addSubview(collectionView)
+        contentView.addSubview(linksSegment)
         contentView.addSubview(viewAllLinksBtn)
+        contentView.addSubview(chatWithUsBtn)
+        contentView.addSubview(frequentlAskedQuesBtn)
         containerView.addSubview(contentView)
         view.addSubview(containerView)
-        
+    }
+    
+    func setUpAutoLayout() {
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: view.topAnchor),
             containerView.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -189,8 +238,18 @@ class ViewController: UIViewController {
             
             viewAllLinksBtn.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             viewAllLinksBtn.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 16),
-            viewAllLinksBtn.topAnchor.constraint(equalTo: viewAnalyticsBtn.bottomAnchor, constant: 20),
-            viewAllLinksBtn.heightAnchor.constraint(equalToConstant: 48)
+            viewAllLinksBtn.topAnchor.constraint(equalTo: linksSegment.bottomAnchor, constant: 20),
+            viewAllLinksBtn.heightAnchor.constraint(equalToConstant: 48),
+            
+            chatWithUsBtn.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            chatWithUsBtn.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 16),
+            chatWithUsBtn.topAnchor.constraint(equalTo: viewAllLinksBtn.bottomAnchor, constant: 20),
+            chatWithUsBtn.heightAnchor.constraint(equalToConstant: 48),
+            
+            frequentlAskedQuesBtn.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            frequentlAskedQuesBtn.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 16),
+            frequentlAskedQuesBtn.topAnchor.constraint(equalTo: chatWithUsBtn.bottomAnchor, constant: 20),
+            frequentlAskedQuesBtn.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
 }
@@ -224,6 +283,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Item tapped---")
+    }
+}
+
+extension ViewController {
+    @objc func segmentedValueChanged(_ sender:UISegmentedControl!) {
+        print("Selected Segment Index is : \(sender.selectedSegmentIndex)")
     }
 }
 
