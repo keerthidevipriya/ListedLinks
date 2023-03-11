@@ -104,6 +104,12 @@ class ViewController: UIViewController {
         return myCollectionView
     }()
     
+    private lazy var linksTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
     
     var linksSegment: UISegmentedControl = {
         var mySegmentedControl = UISegmentedControl (items: ["Top Links","Recent Links"])
@@ -173,8 +179,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        linksTableView.reloadData()
         callApi()
         setUpData()
+        setUpTableView()
         setUpUI()
         setUpAutoLayout()
     }
@@ -188,6 +196,16 @@ class ViewController: UIViewController {
         view.addSubview(collectionView)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        linksTableView.reloadData()
+    }
+    
+    func setUpTableView() {
+        linksTableView.delegate = self
+        linksTableView.dataSource = self
+        linksTableView.estimatedRowHeight = 20
+        linksTableView.rowHeight = UITableView.automaticDimension
+    }
     
     func setUpUI() {
         containerView.addSubview(settingsImage)
@@ -200,6 +218,7 @@ class ViewController: UIViewController {
         contentView.addSubview(viewAnalyticsBtn)
         contentView.addSubview(collectionView)
         contentView.addSubview(linksSegment)
+        contentView.addSubview(linksTableView)
         contentView.addSubview(viewAllLinksBtn)
         contentView.addSubview(chatWithUsBtn)
         contentView.addSubview(frequentlAskedQuesBtn)
@@ -244,10 +263,14 @@ class ViewController: UIViewController {
             viewAnalyticsBtn.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 464),
             viewAnalyticsBtn.heightAnchor.constraint(equalToConstant: 48),
             
+            linksTableView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            linksTableView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
+            linksTableView.topAnchor.constraint(equalTo: linksSegment.bottomAnchor, constant: 20),
+            //linksTableView.heightAnchor.constraint(equalToConstant: 250),
             
             viewAllLinksBtn.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             viewAllLinksBtn.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 16),
-            viewAllLinksBtn.topAnchor.constraint(equalTo: linksSegment.bottomAnchor, constant: 20),
+            viewAllLinksBtn.topAnchor.constraint(equalTo: linksTableView.bottomAnchor, constant: 20),
             viewAllLinksBtn.heightAnchor.constraint(equalToConstant: 48),
             
             chatWithUsBtn.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
@@ -260,6 +283,23 @@ class ViewController: UIViewController {
             frequentlAskedQuesBtn.topAnchor.constraint(equalTo: chatWithUsBtn.bottomAnchor, constant: 20),
             frequentlAskedQuesBtn.heightAnchor.constraint(equalToConstant: 48)
         ])
+    }
+}
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as UITableViewCell
+        cell.backgroundColor = .red
+        cell.textLabel?.text = "sai"
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.contentSize.height//UITableView.automaticDimension
     }
 }
 
