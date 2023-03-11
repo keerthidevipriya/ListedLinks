@@ -17,6 +17,9 @@
 		5612553729AD37E8006C7832 /* ListedLinksUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5612553629AD37E8006C7832 /* ListedLinksUITestsLaunchTests.swift */; };
 		5612554529AD3D49006C7832 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5612554429AD3D49006C7832 /* Extensions.swift */; };
 		567E45B829B4EA1300C097C0 /* HomeTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567E45B729B4EA1300C097C0 /* HomeTabbarController.swift */; };
+		56BF791629BC97FF004B55AB /* dashboardResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 56BF791529BC97FF004B55AB /* dashboardResponse.json */; };
+		56BF791929BC9857004B55AB /* DashboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BF791829BC9857004B55AB /* DashboardModel.swift */; };
+		56BF791C29BC98F7004B55AB /* DashboardApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BF791B29BC98F7004B55AB /* DashboardApi.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,9 @@
 		5612553629AD37E8006C7832 /* ListedLinksUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListedLinksUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5612554429AD3D49006C7832 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		567E45B729B4EA1300C097C0 /* HomeTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabbarController.swift; sourceTree = "<group>"; };
+		56BF791529BC97FF004B55AB /* dashboardResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dashboardResponse.json; sourceTree = "<group>"; };
+		56BF791829BC9857004B55AB /* DashboardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardModel.swift; sourceTree = "<group>"; };
+		56BF791B29BC98F7004B55AB /* DashboardApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardApi.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +107,9 @@
 		5612551229AD37E6006C7832 /* ListedLinks */ = {
 			isa = PBXGroup;
 			children = (
+				56BF791A29BC98CD004B55AB /* ApiIntegration */,
+				56BF791729BC9837004B55AB /* Model */,
+				56BF791429BC973D004B55AB /* Resources */,
 				567E45B629B4E9D900C097C0 /* Controllers */,
 				5612554329AD3CFC006C7832 /* Utilities */,
 				5612551329AD37E6006C7832 /* AppDelegate.swift */,
@@ -144,6 +153,30 @@
 				567E45B729B4EA1300C097C0 /* HomeTabbarController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		56BF791429BC973D004B55AB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				56BF791529BC97FF004B55AB /* dashboardResponse.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		56BF791729BC9837004B55AB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				56BF791829BC9857004B55AB /* DashboardModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		56BF791A29BC98CD004B55AB /* ApiIntegration */ = {
+			isa = PBXGroup;
+			children = (
+				56BF791B29BC98F7004B55AB /* DashboardApi.swift */,
+			);
+			path = ApiIntegration;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5612552029AD37E8006C7832 /* LaunchScreen.storyboard in Resources */,
+				56BF791629BC97FF004B55AB /* dashboardResponse.json in Resources */,
 				5612551D29AD37E8006C7832 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,6 +314,8 @@
 				5612551429AD37E6006C7832 /* AppDelegate.swift in Sources */,
 				5612551629AD37E6006C7832 /* SceneDelegate.swift in Sources */,
 				5612554529AD3D49006C7832 /* Extensions.swift in Sources */,
+				56BF791C29BC98F7004B55AB /* DashboardApi.swift in Sources */,
+				56BF791929BC9857004B55AB /* DashboardModel.swift in Sources */,
 				567E45B829B4EA1300C097C0 /* HomeTabbarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

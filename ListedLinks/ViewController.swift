@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var model: DashboardModel?
+    
     struct Constants {
         static let dashboard = "Dashboard"
         static let goodMrng = "Good morning"
@@ -171,6 +173,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        callApi()
+        setUpData()
         setUpUI()
         setUpAutoLayout()
     }
@@ -181,7 +185,7 @@ class ViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.view.addSubview(collectionView)
+        view.addSubview(collectionView)
     }
     
     
@@ -294,6 +298,16 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 extension ViewController {
     @objc func segmentedValueChanged(_ sender:UISegmentedControl!) {
         print("Selected Segment Index is : \(sender.selectedSegmentIndex)")
+    }
+}
+
+extension ViewController {
+    func callApi() {
+        model = DashboardApi.loadDashboardJson()
+    }
+    
+    func setUpData() {
+        nameLabel.text = model?.name
     }
 }
 
