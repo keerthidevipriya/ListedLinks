@@ -105,7 +105,7 @@ class ViewController: UIViewController {
     }()
     
     private lazy var linksTableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -264,9 +264,9 @@ class ViewController: UIViewController {
             viewAnalyticsBtn.heightAnchor.constraint(equalToConstant: 48),
             
             linksTableView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
-            linksTableView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
+            linksTableView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 16),
             linksTableView.topAnchor.constraint(equalTo: linksSegment.bottomAnchor, constant: 20),
-            //linksTableView.heightAnchor.constraint(equalToConstant: 250),
+            linksTableView.heightAnchor.constraint(equalToConstant: .greatestFiniteMagnitude),
             
             viewAllLinksBtn.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             viewAllLinksBtn.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 16),
@@ -299,7 +299,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.contentSize.height//UITableView.automaticDimension
+        return UITableView.automaticDimension
     }
 }
 
