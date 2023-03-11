@@ -175,6 +175,11 @@ class ViewController: UIViewController {
         setUpAutoLayout()
     }
     
+    override func viewDidLayoutSubviews() {
+        contentView.isScrollEnabled = true
+        contentView.contentSize = CGSizeMake(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.view.addSubview(collectionView)
     }
